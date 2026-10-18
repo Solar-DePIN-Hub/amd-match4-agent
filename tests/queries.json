@@ -1,0 +1,322 @@
+[
+ {
+  "id": "v01",
+  "query": "What is the latest version of the requests package on PyPI?",
+  "url": null,
+  "expected": "2.34.2",
+  "note": "verified 2026-10-18 (live API/page) pypi.org/pypi/requests/json",
+  "set": "dev"
+ },
+ {
+  "id": "v02",
+  "query": "What is the latest version of numpy on PyPI?",
+  "url": null,
+  "expected": "2.5.4",
+  "note": "verified 2026-10-18 (live API/page) pypi JSON",
+  "set": "dev"
+ },
+ {
+  "id": "v03",
+  "query": "What is the latest version of the react package on npm?",
+  "url": null,
+  "expected": "19.3.1",
+  "note": "verified 2026-10-18 (live API/page) registry.npmjs.org/react/latest",
+  "set": "dev"
+ },
+ {
+  "id": "v04",
+  "query": "Latest version of the express npm package?",
+  "url": null,
+  "expected": "5.3.0",
+  "note": "verified 2026-10-18 (live API/page) npm registry",
+  "set": "dev"
+ },
+ {
+  "id": "v05",
+  "query": "What is the latest stable version of the serde crate?",
+  "url": null,
+  "expected": "1.0.229",
+  "note": "verified 2026-10-18 (live API/page) crates.io API",
+  "set": "dev"
+ },
+ {
+  "id": "v06",
+  "query": "What is the latest release version of ollama/ollama on GitHub?",
+  "url": null,
+  "expected": "0.40.6",
+  "note": "verified 2026-10-18 (live API/page) GitHub releases/latest tag v0.40.6",
+  "set": "dev"
+ },
+ {
+  "id": "v07",
+  "query": "What is the current LTS version of Node.js?",
+  "url": null,
+  "expected": "24.22.0",
+  "note": "verified 2026-10-18 (live API/page) endoflife.date (v26 LTS starts 2026-10-28); nodejs.org shows v24.22.0 LTS",
+  "set": "dev"
+ },
+ {
+  "id": "v08",
+  "query": "What is the latest version of Python?",
+  "url": null,
+  "expected": "3.15.0",
+  "note": "verified 2026-10-18 (live API/page) endoflife.date/python",
+  "set": "dev"
+ },
+ {
+  "id": "v09",
+  "query": "What is the latest version of Django?",
+  "url": null,
+  "expected": "6.1.2",
+  "note": "verified 2026-10-18 (live API/page) endoflife.date/django",
+  "set": "dev"
+ },
+ {
+  "id": "v10",
+  "query": "What is the latest Kubernetes version?",
+  "url": null,
+  "expected": "1.37.1",
+  "note": "verified 2026-10-18 (live API/page) endoflife.date/kubernetes",
+  "set": "dev"
+ },
+ {
+  "id": "d01",
+  "query": "When does PostgreSQL 16 reach end of life?",
+  "url": null,
+  "expected": "2028-11-09",
+  "note": "verified 2026-10-18 (live API/page) endoflife.date/postgresql (ISO format assumed)",
+  "set": "dev"
+ },
+ {
+  "id": "d02",
+  "query": "What is the release date of Python 3.12?",
+  "url": null,
+  "expected": "2023-10-02",
+  "note": "verified 2026-10-18 (live API/page) endoflife.date/python",
+  "set": "dev"
+ },
+ {
+  "id": "d03",
+  "query": "When was Ubuntu 26.04 released?",
+  "url": null,
+  "expected": "2026-04-23",
+  "note": "verified 2026-10-18 (live API/page) endoflife.date/ubuntu",
+  "set": "dev"
+ },
+ {
+  "id": "u01",
+  "query": "What is the latest SQLite version?",
+  "url": "https://www.sqlite.org/index.html",
+  "expected": "3.54.1",
+  "note": "verified 2026-10-18 (live API/page) sqlite.org homepage 'Version 3.54.1'",
+  "set": "dev"
+ },
+ {
+  "id": "u02",
+  "query": "What is the latest Git version?",
+  "url": "https://git-scm.com/",
+  "expected": "2.56.0",
+  "note": "verified 2026-10-18 (live API/page) git-scm.com homepage",
+  "set": "dev"
+ },
+ {
+  "id": "u03",
+  "query": "What is the current stable Rust version?",
+  "url": "https://www.rust-lang.org/",
+  "expected": "1.99.1",
+  "note": "verified 2026-10-18 (live API/page) rust-lang.org 'Version 1.99.1'",
+  "set": "dev"
+ },
+ {
+  "id": "u04",
+  "query": "What is the latest stable Go version?",
+  "url": "https://go.dev/dl/",
+  "expected": "1.27.2",
+  "note": "verified 2026-10-18 (live API/page) go.dev/dl go1.27.2.src",
+  "set": "dev"
+ },
+ {
+  "id": "u05",
+  "query": "What is the phone number for individual tax help?",
+  "url": "https://www.irs.gov/help/telephone-assistance",
+  "expected": "800-829-1040",
+  "note": "verified 2026-10-18 (live API/page) irs.gov page",
+  "set": "dev"
+ },
+ {
+  "id": "p01",
+  "query": "What is the customer service phone number of Delta Air Lines?",
+  "url": null,
+  "expected": "800-221-1212",
+  "note": "verified 2026-10-18 (live API/page) search snippets + gethuman; widely published",
+  "set": "dev"
+ },
+ {
+  "id": "p02",
+  "query": "What is the American Airlines reservations phone number?",
+  "url": null,
+  "expected": "800-433-7300",
+  "note": "verified 2026-10-18 (live API/page) 11 matches in search results",
+  "set": "dev"
+ },
+ {
+  "id": "p03",
+  "query": "What is the United Airlines customer service phone number?",
+  "url": null,
+  "expected": "800-864-8331",
+  "note": "verified 2026-10-18 (live API/page) 22 matches in search results",
+  "set": "dev"
+ },
+ {
+  "id": "p04",
+  "query": "What is Apple's US support phone number?",
+  "url": null,
+  "expected": "800-275-2273",
+  "note": "verified 2026-10-18 (live API/page) 15 matches in search results",
+  "set": "dev"
+ },
+ {
+  "id": "p05",
+  "query": "What is the Southwest Airlines phone number?",
+  "url": null,
+  "expected": "800-435-9792",
+  "note": "verified 2026-10-18 (live API/page) 33 matches",
+  "set": "dev"
+ },
+ {
+  "id": "p06",
+  "query": "What is the phone number of Amtrak?",
+  "url": null,
+  "expected": "800-872-7245",
+  "note": "verified 2026-10-18 (live API/page) 29 matches",
+  "set": "dev"
+ },
+ {
+  "id": "f01",
+  "query": "Who is the CEO of AMD?",
+  "url": null,
+  "expected": "Lisa Su",
+  "note": "Wikidata Q128896 P169 (checked 2026-10-18)",
+  "set": "dev"
+ },
+ {
+  "id": "f02",
+  "query": "In what year was NVIDIA founded?",
+  "url": null,
+  "expected": "1993",
+  "note": "Wikidata P571 / Wikipedia",
+  "set": "dev"
+ },
+ {
+  "id": "f03",
+  "query": "Where is AMD headquartered?",
+  "url": null,
+  "expected": "Santa Clara",
+  "note": "Wikidata P159",
+  "set": "dev"
+ },
+ {
+  "id": "f04",
+  "query": "What is the capital of Australia?",
+  "url": null,
+  "expected": "Canberra",
+  "note": "Wikidata P36",
+  "set": "dev"
+ },
+ {
+  "id": "f05",
+  "query": "Who directed the film Inception?",
+  "url": null,
+  "expected": "Christopher Nolan",
+  "note": "Wikidata P57",
+  "set": "dev"
+ },
+ {
+  "id": "f06",
+  "query": "In what year was the Python programming language first released?",
+  "url": null,
+  "expected": "1991",
+  "note": "Wikidata P577 / python.org history",
+  "set": "dev"
+ },
+ {
+  "id": "n01",
+  "query": "What is the phone number of Zentrovax Quantum Bakery Ltd?",
+  "url": null,
+  "expected": "",
+  "note": "fictional company -> must be empty",
+  "set": "dev"
+ },
+ {
+  "id": "n02",
+  "query": "What is the latest version of the PyPI package zzqx-nonexistent-pkg-4821?",
+  "url": null,
+  "expected": "",
+  "note": "package does not exist (pypi 404)",
+  "set": "dev"
+ },
+ {
+  "id": "h01",
+  "query": "What is the latest version of pandas on PyPI?",
+  "url": null,
+  "expected": "3.0.6",
+  "note": "verified 2026-10-18; HOLDOUT (written after tuning, no code changes after)",
+  "set": "holdout"
+ },
+ {
+  "id": "h02",
+  "query": "What is the latest version of the lodash package on npm?",
+  "url": null,
+  "expected": "4.18.1",
+  "note": "verified 2026-10-18; HOLDOUT (written after tuning, no code changes after)",
+  "set": "holdout"
+ },
+ {
+  "id": "h03",
+  "query": "What is the latest release of vllm-project/vllm on GitHub?",
+  "url": null,
+  "expected": "0.32.0",
+  "note": "verified 2026-10-18; HOLDOUT (written after tuning, no code changes after)",
+  "set": "holdout"
+ },
+ {
+  "id": "h04",
+  "query": "What is the latest version of PHP?",
+  "url": null,
+  "expected": "8.5.11",
+  "note": "verified 2026-10-18; HOLDOUT (written after tuning, no code changes after)",
+  "set": "holdout"
+ },
+ {
+  "id": "h05",
+  "query": "Who is the CEO of Microsoft?",
+  "url": null,
+  "expected": "Satya Nadella",
+  "note": "verified 2026-10-18; HOLDOUT (written after tuning, no code changes after)",
+  "set": "holdout"
+ },
+ {
+  "id": "h06",
+  "query": "In what year was Tesla founded?",
+  "url": null,
+  "expected": "2003",
+  "note": "verified 2026-10-18; HOLDOUT (written after tuning, no code changes after)",
+  "set": "holdout"
+ },
+ {
+  "id": "h07",
+  "query": "What is the T-Mobile customer service phone number?",
+  "url": null,
+  "expected": "800-937-8997",
+  "note": "verified 2026-10-18; HOLDOUT (written after tuning, no code changes after)",
+  "set": "holdout"
+ },
+ {
+  "id": "h08",
+  "query": "What is the latest stable version of the Linux kernel?",
+  "url": "https://www.kernel.org/",
+  "expected": "7.2.11",
+  "note": "verified 2026-10-18; HOLDOUT (written after tuning, no code changes after)",
+  "set": "holdout"
+ }
+]

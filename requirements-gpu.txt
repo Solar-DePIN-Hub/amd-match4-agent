@@ -1,0 +1,19 @@
+# Installed with --no-deps so nothing can replace the ROCm torch of the base image.
+# Versions to pin on the AMD notebook once py3.14 wheels are confirmed (tokenizers/safetensors need cp314 wheels).
+transformers
+tokenizers
+safetensors
+huggingface_hub
+hf-xet
+regex
+pyyaml
+tqdm
+filelock
+packaging
+requests
+urllib3
+idna
+certifi
+charset-normalizer
+fsspec
+typing_extensions
