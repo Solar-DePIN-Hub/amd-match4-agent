@@ -31,7 +31,11 @@ class HFLLM:
         assert torch.cuda.is_available(), "GPU (ROCm) not visible"
         self.torch = torch
         self.tok = AutoTokenizer.from_pretrained(path)
-        self.model = AutoModelForCausalLM.from_pretrained(path, torch_dtype=torch.bfloat16).to("cuda").eval()
+        try:
+            m = AutoModelForCausalLM.from_pretrained(path, dtype=torch.bfloat16)
+        except TypeError:
+            m = AutoModelForCausalLM.from_pretrained(path, torch_dtype=torch.bfloat16)
+        self.model = m.to("cuda").eval()
         self.name = "transformers:" + os.path.basename(path.rstrip("/"))
         self._gen("ping", 4)  # warm-up kernels
 

@@ -36,8 +36,52 @@ def write(qid: str, r: dict, extra: bool = True):
     return path
 
 
+def _alive(pidfile: str) -> bool:
+    try:
+        os.kill(int(open(pidfile).read().strip() or 0), 0)
+        return True
+    except Exception:
+        return False
+
+
+def ensure_server() -> str:
+    """Make sure the resident GPU server is running (robust to a harness that overrides the image CMD).
+    Returns 'ready' | 'starting' | 'spawned' | 'off'."""
+    from agent import server
+    if os.path.exists(server.READY):
+        return "ready"
+    if os.path.exists(server.STARTING) and _alive(server.STARTING):
+        return "starting"
+    if os.environ.get("AGENT_LLM", "none").lower() == "none" or os.environ.get("AGENT_NO_SPAWN"):
+        return "off"
+    import subprocess
+    log = open(os.environ.get("AGENT_SERVER_LOG", "/tmp/agent-server.log"), "ab")
+    subprocess.Popen([sys.executable, os.path.join(HERE, "app.py"), "--serve"], stdout=log, stderr=log,
+                     stdin=subprocess.DEVNULL, start_new_session=True, cwd=HERE)
+    t = time.monotonic()
+    while not os.path.exists(server.STARTING) and time.monotonic() - t < 3:
+        time.sleep(0.05)
+    return "spawned"
+
+
+def wait_ready(limit_s: float) -> bool:
+    from agent import server
+    t = time.monotonic()
+    while time.monotonic() - t < limit_s:
+        if os.path.exists(server.READY):
+            return True
+        if not (os.path.exists(server.STARTING) and _alive(server.STARTING)):
+            return False  # server died (see /tmp/agent-server.log)
+        time.sleep(0.5)
+    return os.path.exists(server.READY)
+
+
 def answer(q: str, url: str | None) -> dict:
     from agent import server
+    try:
+        ensure_server()
+    except Exception:
+        pass
     left = BUDGET - (time.monotonic() - T0)
     wait_until = time.monotonic() + min(5.0, left / 3)
     while (os.path.exists(server.STARTING) and time.monotonic() < wait_until
@@ -70,6 +114,7 @@ def main(argv=None):
     ap.add_argument("--serve", action="store_true")
     ap.add_argument("--index", nargs="?", const="")
     ap.add_argument("--corpus")
+    ap.add_argument("--warmup", "--wait-ready", action="store_true")
     a, _ = ap.parse_known_args(argv)
     if a.out:
         OUT = a.out
@@ -87,8 +132,15 @@ def main(argv=None):
                           t.get("url") or t.get("start_url")))
     elif a.query or a.pos:
         tasks.append((a.qid or "query_01", a.query or a.pos, a.url))
-    elif a.index is not None:
-        print(json.dumps({"indexed": 0, "note": "live web agent; nothing to index"}))
+    elif os.environ.get("AGENT_QUERY") or os.environ.get("QUERY"):
+        tasks.append((os.environ.get("AGENT_QUERY_ID") or os.environ.get("QUERY_ID") or "query_01",
+                      os.environ.get("AGENT_QUERY") or os.environ.get("QUERY"),
+                      os.environ.get("AGENT_URL") or os.environ.get("START_URL") or os.environ.get("URL")))
+    elif a.index is not None or a.warmup:
+        # startup hook (MC3 style): bring the resident model up inside the startup budget, not a query's
+        st = ensure_server()
+        ok = st == "off" or wait_ready(float(os.environ.get("AGENT_INDEX_WAIT_S", "540")))
+        print(json.dumps({"indexed": 0, "server": st, "ready": ok, "note": "live web agent; nothing to index"}))
         return
     for qid, q, url in tasks:
         write(qid, {"answer": "", "sources": [], "confidence": 0.0})  # valid file even if we get killed

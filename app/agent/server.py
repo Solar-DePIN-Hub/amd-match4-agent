@@ -25,6 +25,15 @@ STARTING = SOCK + ".starting"
 
 
 def main():
+    import fcntl, sys
+    lk = open(SOCK + ".lock", "w")
+    try:
+        fcntl.flock(lk, fcntl.LOCK_EX | fcntl.LOCK_NB)  # exactly one resident server per container
+    except OSError:
+        print("[server] another server is already running", flush=True)
+        sys.exit(0)
+    if os.path.exists(READY):
+        os.unlink(READY)
     open(STARTING, "w").write(str(os.getpid()))
     from .agent import Agent
     from . import llm

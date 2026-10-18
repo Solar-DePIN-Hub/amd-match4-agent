@@ -23,6 +23,12 @@ or an empty answer when it cannot ground one. Built for the mandated base `rocm/
   `{"answer": "...", "sources": [url], "citations": [url], "source_url": url, "confidence": x, "trace": {...}, "seconds": s}`.
   `sources` and `citations` hold the same single URL. `trace` and `seconds` are debug fields: drop them if the spec forbids extra keys (`write(..., extra=False)`).
 - Container `CMD python3 /app/app.py --serve` loads the model once (startup) and serves a unix socket `/tmp/agent.sock`.
+- Robust to likely harness variants:
+  - `python3 /app/app.py --index [...]` or `--warmup` (MC3-style startup hook): starts the resident server if it is not running and **blocks until the model is loaded** (≤ `AGENT_INDEX_WAIT_S`, default 540 s), so model load is charged to startup, not to a query.
+  - Harness overrides CMD (e.g. `sleep infinity`): the first query spawns the server in the background (that one query is answered in rule mode), later queries use the GPU model. A file lock guarantees one server per container.
+  - Env-var input when no CLI query is given: `AGENT_QUERY`/`QUERY`, `AGENT_QUERY_ID`/`QUERY_ID`, `AGENT_URL`/`START_URL`/`URL`.
+  - Batch file: `--input tasks.json` (list, or `{"tasks"|"queries": [...]}`; keys `id|query_id`, `query|question|task`, `url|start_url`). One output file per task.
+  - `--output-dir DIR` or env `AGENT_OUTPUT` to redirect output.
 - Formats (assumptions to revisit once real examples are seen): US phones `800-221-1212` (the grader keeps `( ) +`, so these are removed). Versions without `v`. API dates in ISO `YYYY-MM-DD`. Years as `YYYY`. Page-extracted values verbatim.
 - Network: assumes outbound internet during grading (the general PDF says so). If only an allowlist is reachable (as reported for the notebook pod), search engines fail and the agent falls back to resolvers and the start URL.
 
@@ -44,9 +50,15 @@ python3 tests/run_eval.py            # all queries, fresh process each, 30 s kil
 python3 app/app.py --query-id t --query "Who is the CEO of AMD?"   # AGENT_OUTPUT=/tmp/o to redirect output
 ```
 
+## Published image
+- `ghcr.io/solar-depin-hub/amd-match4-agent:v1`, assembled by `scripts/assemble.sh` in GitHub Actions (`.github/workflows/image.yml`, manual dispatch):
+  the 11 unmodified base layers + a weights layer (`/models/qwen` = Qwen/Qwen3-4B-Instruct-2507, bf16, ~8 GB) + an app/deps layer (`/app`, `/opt/deps`).
+  No docker pull of the 29 GiB base, no secrets (the workflow uses the ephemeral `GITHUB_TOKEN` only for the push).
+- Python deps pinned in `app/requirements.txt`, verified on CPython 3.14 (transformers 5.20.0 loads and generates; numpy etc. come from the base venv).
+
 ## On the AMD notebook (TODO)
 1. `scripts/fetch_model.sh Qwen/Qwen3-8B` (fallback `Qwen/Qwen3-4B-Instruct-2507`).
 2. `docker build -t m4 .`, then check the size (≤ 60 GiB uncompressed) and that `torch.version.hip` survives.
 3. `docker run -d --device=/dev/kfd --device=/dev/dri --group-add video --name m4 m4`, then `scripts/gpu_check.sh m4`. Measure startup (≤ 10 min), per-query time (≤ 30 s), VRAM peak (1–48 GiB), and whether the pod has network or only an allowlist.
 4. Compare the LLM judge with rule mode on `tests/` and keep whichever scores better.
-5. Do **not** push the image publicly until the official spec is read. Submission = public image link, never committed to a public repo.
+5. Image is published early (no official spec yet); re-tag after spec/GPU checks. Submission = public image link, never committed to a public repo.
